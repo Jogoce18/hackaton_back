@@ -74,7 +74,7 @@ export async function getMarkdown(_,res){
             const user = await db.collection('users').findOne({userId:session.userId});
             const notes = await db.collection('notes').find({userId:session.userId}).toArray();
 
-            res.status(200).send(notes,{name:user.name});
+            res.status(200).send({notes:notes,name:user.name});
         } catch (error) {
             res.status(500).send({message:`${error}`});
         }
