@@ -7,6 +7,8 @@ export async function signUp(req,res){
     const { name,email,password } = req.body;
     const passwordHash = bcrypt.hashSync(password, 10);
     try {
+        const user = await db.collection('users').findOne({email:email});
+        if(user) return res.status(400).send({message:'Usuário já cadastrado!'})
         await db.collection('users').insertOne({
             name: stripHtml(name).result,
             email: stripHtml(email).result,
