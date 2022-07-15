@@ -33,7 +33,7 @@ export async function signIn(req,res){
                 userId: user._id,
                 token
             });
-            res.status(201).send(token)
+            res.status(201).send({token:token,name:user.name});
         }else{
             res.status(401).send({message:'Senha inválida!'})
         }

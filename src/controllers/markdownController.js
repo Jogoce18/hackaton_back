@@ -70,11 +70,9 @@ export async function getMarkdown(_,res){
         try {
             const session = await db.collection('sessions').findOne({token:token});
             if(!session) return res.status(404).send({message:'Sessão encerrada, logue novamente!'});
-
-            const user = await db.collection('users').findOne({userId:session.userId});
             const notes = await db.collection('notes').find({userId:session.userId}).toArray();
 
-            res.status(200).send({notes:notes,name:user.name});
+            res.status(200).send(notes);
         } catch (error) {
             res.status(500).send({message:`${error}`});
         }
