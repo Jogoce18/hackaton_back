@@ -1,6 +1,6 @@
 import db from "../databases/mongo.js";
-import bcrypt from 'bcrypt'
-import {v4 as uuid} from 'uuid'
+import bcrypt from 'bcrypt';
+import {v4 as uuid} from 'uuid';
 import { stripHtml } from "string-strip-html";
 
 export async function signUp(req,res){
