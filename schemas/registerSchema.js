@@ -2,6 +2,7 @@ import joi from "joi";
 
 export default async function registerSchema(req,res,next){
     const registerSchema = joi.object({
+        name: joi.string().trim().required(),
         email: joi.string().trim().email().required(),
         password: joi.string().required(),
         confirmPass: joi.ref('password')

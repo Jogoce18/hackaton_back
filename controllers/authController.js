@@ -4,11 +4,14 @@ import {v4 as uuid} from 'uuid';
 import { stripHtml } from "string-strip-html";
 
 export async function signUp(req,res){
-    const { email,password } = req.body;
+    const { name,email,password } = req.body;
     const passwordHash = bcrypt.hashSync(password, 10);
     try {
-        await db.collection('users').insertOne({email: stripHtml(email).result,
-            password: passwordHash});
+        await db.collection('users').insertOne({
+            name: stripHtml(name).result,
+            email: stripHtml(email).result,
+            password: passwordHash
+        });
        res.status(201).send({message:'Cadastrado com sucesso!'});
     } catch (error) {
         res.status(500).send({message:`${error}`});
