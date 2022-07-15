@@ -8,10 +8,10 @@ export async function signUp(req,res){
     const passwordHash = bcrypt.hashSync(password, 10);
     try {
         const user = await db.collection('users').findOne({email:email});
-        if(user) return res.status(400).send({message:'Usuário já cadastrado!'})
+        if(user) return res.status(400).send({message:'Usuário já cadastrado!'});
         await db.collection('users').insertOne({
-            name: stripHtml(name).result,
-            email: stripHtml(email).result,
+            name: stripHtml(name.trim()).result,
+            email: stripHtml(email.trim()).result,
             password: passwordHash
         });
        res.status(201).send({message:'Cadastrado com sucesso!'});
