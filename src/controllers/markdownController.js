@@ -8,7 +8,7 @@ export async function editMarkdown(req,res){
 
     if(!token){
         try {
-            await db.collection('allnotes').updateOne({noteId:id},{$set:{
+            await db.collection('allnotes').updateOne({noteId:parseInt(id)},{$set:{
                 name:stripHtml(name.trim()).result,
                 description:stripHtml(description.trim()).result
             }});
@@ -21,7 +21,7 @@ export async function editMarkdown(req,res){
             const session = await db.collection('sessions').findOne({token:token});
             if(!session) return res.status(404).send({message:'Sessão encerrada, logue novamente!'});
 
-            await db.collection('notes').updateOne({userId:session.userId,noteId:id},{$set:{
+            await db.collection('notes').updateOne({userId:session.userId,noteId:parseInt(id)},{$set:{
                 name:stripHtml(name.trim()).result,
                 description:stripHtml(description.trim()).result
             }});
@@ -38,7 +38,7 @@ export async function deleteMarkdown(req,res){
 
     if(!token){
         try {
-            await db.collection('allnotes').deleteOne({noteId:id});
+            await db.collection('allnotes').deleteOne({noteId:parseInt(id)});
             res.status(201).send({message:'Nota deletada!'});
         } catch (error) {
             res.status(500).send({message:`${error}`});
@@ -48,7 +48,7 @@ export async function deleteMarkdown(req,res){
             const session = await db.collection('sessions').findOne({token:token});
             if(!session) return res.status(404).send({message:'Sessão encerrada, logue novamente!'});
 
-            await db.collection('notes').deleteOne({userId:session.userId,noteId:id});
+            await db.collection('notes').deleteOne({userId:session.userId,noteId:parseInt(id)});
             res.status(201).send({message:'Nota deletada!'});
         } catch (error) {
             res.status(500).send({message:`${error}`});
